@@ -1,0 +1,3 @@
+"""
+Core backtesting engine components
+""" 
