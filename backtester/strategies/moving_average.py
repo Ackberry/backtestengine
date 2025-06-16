@@ -1,18 +1,36 @@
 import pandas as pd
 import numpy as np
-from typing import Tuple, Dict
+from typing import Tuple, Dict, Any
+from .base_strategy import BaseStrategy
 
-class MovingAverageCrossover:
-    def __init__(self, short_window: int = 20, long_window: int = 50):
+class MovingAverageCrossover(BaseStrategy):
+    def __init__(self, parameters: Dict[str, Any]):
         """
         Initialize the Moving Average Crossover strategy.
         
         Args:
-            short_window (int): Short-term moving average window
-            long_window (int): Long-term moving average window
+            parameters (Dict[str, Any]): Dictionary containing:
+                - short_window (int): Short-term moving average window
+                - long_window (int): Long-term moving average window
         """
-        self.short_window = short_window
-        self.long_window = long_window
+        super().__init__(parameters)
+        self.short_window = parameters.get('short_window', 20)
+        self.long_window = parameters.get('long_window', 50)
+        
+    def validate_parameters(self) -> bool:
+        """
+        Validate the strategy parameters.
+        
+        Returns:
+            bool: True if parameters are valid, False otherwise
+        """
+        if not isinstance(self.short_window, int) or not isinstance(self.long_window, int):
+            return False
+        if self.short_window >= self.long_window:
+            return False
+        if self.short_window <= 0 or self.long_window <= 0:
+            return False
+        return True
         
     def generate_signals(self, data: pd.DataFrame) -> pd.DataFrame:
         """
