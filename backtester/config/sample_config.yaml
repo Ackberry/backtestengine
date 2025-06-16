@@ -1,0 +1,42 @@
+# Sample configuration file for backtesting strategies
+
+# Data configuration
+data:
+  symbol: 'AAPL'  # Apple Inc.
+  data_source: 'yfinance'
+  start_date: '2023-01-01'
+  end_date: '2024-01-01'
+
+# Backtest configuration
+backtest:
+  initial_capital: 100000
+  commission: 0.001  # 0.1% commission per trade
+  position_size: 0.1  # Use 10% of capital per trade
+
+# Strategy configurations
+strategies:
+  # Moving Average Crossover
+  ma_crossover:
+    name: 'MovingAverageCrossover'
+    parameters:
+      short_window: 20
+      long_window: 50
+
+  # RSI Strategy
+  rsi:
+    name: 'RSIStrategy'
+    parameters:
+      period: 14
+      overbought: 70
+      oversold: 30
+
+# Output configuration
+output:
+  save_trades: true
+  plot_results: true
+  metrics:
+    - 'sharpe_ratio'
+    - 'max_drawdown'
+    - 'win_rate'
+    - 'cagr'
+    - 'volatility' 
